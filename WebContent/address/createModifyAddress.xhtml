@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:event listener="#{createModifyAddress.init()}" type="preRenderView" />
+<body>
+
+	<ui:composition>
+		<h:form>
+		#{createModifyAddress.init()}
+		#{msg['firstName']} <h:inputText
+				value="#{createModifyAddress.firstName}" id="firstName">
+				<f:validateRequired for="firstName"></f:validateRequired>
+			</h:inputText>
+			<h:message for="firstName" showDetail="true" />
+		#{msg['lastName']} <h:inputText
+				value="#{createModifyAddress.lastName}" id="lastName">
+				<f:validateRequired for="lastName" />
+			</h:inputText>
+			<h:message for="lastName" showDetail="true" />
+			<br />
+		#{msg['address']}<h:inputText value="#{createModifyAddress.address}"
+				id="address">
+				<f:validateRequired for="address" />
+			</h:inputText>
+			<h:message for="address" showDetail="true" />
+			<br />
+		#{msg['city']}<h:inputText value="#{createModifyAddress.city}"
+				id="city">
+				<f:validateRequired for="city" />
+			</h:inputText>
+			<h:message for="city" showDetail="true" /> 
+		#{msg['state']} 
+		<h:inputText value="#{createModifyAddress.state}" id="state">
+				<f:validateRequired for="state" />
+			</h:inputText>
+			<h:message for="state" showDetail="true" /> #{msg['zip']} <h:inputText
+				value="#{createModifyAddress.zip}" id="zip">
+				<f:validateRequired for="zip" />
+			</h:inputText>
+			<h:message for="zip" showDetail="true" />
+			<br />
+			<h:commandButton value="#{msg['save']}"
+				action="#{createModifyAddress.submit()}" />
+			<h:link value="#{msg['cancel']}" outcome="home" />
+		</h:form>	
+	</ui:composition>
+
+</body>
+</html>
