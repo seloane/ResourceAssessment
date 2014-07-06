@@ -58,7 +58,7 @@ public class CreateModifyAddress {
 		userInfo.setCity(city);
 		userInfo.setZip(zip);
 		
-		addressProcessor.setCreateModifyAddress(userInfo);
+		addressProcessor.modifyingUserInfo(userInfo);
 	}
 
 	/**

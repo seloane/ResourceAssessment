@@ -25,21 +25,19 @@ import address.UserInfo;
 @RequestScoped
 public class AddressTable {
 	
+	@Inject
+	AddressProcessor addressProcessor;
+	
 	private List<UserInfo> userInfoList = new ArrayList<UserInfo>();
 	
 	AddressTable(){
 		
-		for (int i = 0; i < 10; i++) {
-			UserInfo userInfo = new UserInfo();
-			userInfo.setAddress("124 Downda Rd" + i);
-			userInfo.setCity("city" + i);
-			userInfo.setFirstName("First" + i);
-			userInfo.setLastName("Last" + i);
-			userInfo.setState("State" + i);
-			userInfo.setZip("Zip" + i);
-
-			userInfoList.add(userInfo);
-		}
+	}
+	
+	@PostConstruct
+	public void init(){
+		addressProcessor.initializeUserInfoTable();
+		userInfoList = addressProcessor.getUserInfoList();
 	}
 	
 	/**
@@ -56,37 +54,9 @@ public class AddressTable {
 		this.userInfoList = userInfoList;
 	}
 	
+	public String modifyAddress(UserInfo userInfo){
+		addressProcessor.modifyingUserInfo(userInfo);
+		return "createModifyAddress?faces-redirect=true";
+	}
+	
 }
-//@Inject
-//	AddressProcessor addressProcessor;
-//	
-//	private List<UserInfo> userInfoList;
-//
-//	/**
-//	 * 
-//	 */
-//	public AddressTable() {
-//	}
-//
-//	@PostConstruct
-//	private void init(){
-//		addressProcessor.initializeAddressTable();
-//		userInfoList = addressProcessor.getUserInfoList();
-//	}
-//	
-//	/**
-//	 * @return the addressList
-//	 */
-//	public List<UserInfo> getUserInfoList() {
-//		System.out.println("Jimmy: Getting user info list of size "+userInfoList.size());
-//		return userInfoList;
-//	}
-//
-//	/**
-//	 * @param userInfoList the addressList to set
-//	 */
-//	public void setAddressList(List<UserInfo> userInfoList) {
-//		this.userInfoList = userInfoList;
-//	}
-//
-//}

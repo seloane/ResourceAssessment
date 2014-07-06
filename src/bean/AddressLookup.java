@@ -30,7 +30,10 @@ public class AddressLookup {
 		addressProcessor.search(firstName, lastName);
 		return "home?faces-redirect=true";
 	}
-
+	public String createUserInfo(){
+		addressProcessor.creatingNewUserInfo();
+		return "createModifyAddress?faces-redirect=true";
+	}
 	/**
 	 * @return the firstName
 	 */

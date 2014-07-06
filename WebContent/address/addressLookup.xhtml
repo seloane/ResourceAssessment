@@ -15,7 +15,7 @@
 				action="#{addressLookup.search()}" />
 			<br />
 			<h:link value="#{msg['addressLookup.newAddress.label']}"
-				outcome="createModifyAddress" />
+				outcome="#{addressLookup.createUserInfo()}" />
 		</h:form>
 	</ui:composition>
 </body>

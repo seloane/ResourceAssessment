@@ -6,14 +6,27 @@
 
 <body>
 	<ui:composition>
-		<h:form>		
-			<h:dataTable value="#{addressTable.userInfoList}}" var="userInfo"
-				border="1">
-				<h:column>
-					
-						
-				</h:column>				
-			</h:dataTable>
+		<h:form>
+			<table border="1">
+				<tr>
+					<th>#{msg['addressTable.firstName']}</th>
+					<th>#{msg['addressTable.lastName']}</th>
+					<th>#{msg['addressTable.address']}</th>
+					<th>#{msg['addressTable.city']}</th>
+					<th>#{msg['addressTable.state']}</th>
+					<th>#{msg['addressTable.zip']}</th>
+				</tr>
+			<ui:repeat var="userInfo" value="#{addressTable.userInfoList}">
+				<tr>
+					<td><h:commandLink value="#{userInfo.firstName}" action="#{addressTable.modifyAddress(userInfo)}" /></td>
+					<td>#{userInfo.lastName}</td>
+					<td>#{userInfo.address}</td>
+					<td>#{userInfo.city}</td>
+					<td>#{userInfo.state}</td>
+					<td>#{userInfo.zip}</td>
+				</tr>
+			</ui:repeat>
+			</table>			
 		</h:form>
 	</ui:composition>
 </body>

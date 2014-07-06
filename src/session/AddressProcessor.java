@@ -26,10 +26,19 @@ public class AddressProcessor implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 6934738281781825344L;
+	@Inject
 	private UserInfo userInfo;
 	private List<UserInfo> userInfoList;
 	@Inject
 	private Conversation conversation;
+	boolean isSearch;
+	boolean isCreateUserInfo;
+
+	/**
+	 * 
+	 */
+	public AddressProcessor() {
+	}
 
 	private void initializeConversation() {
 		if (conversation.isTransient()) {
@@ -41,12 +50,6 @@ public class AddressProcessor implements Serializable {
 		if (!conversation.isTransient()) {
 			conversation.end();
 		}
-	}
-
-	/**
-	 * 
-	 */
-	public AddressProcessor() {
 	}
 
 	/**
@@ -65,72 +68,58 @@ public class AddressProcessor implements Serializable {
 	}
 
 	public void initializeAddressLookup() {
-		initializeConversation();
-	}
 
-	public void initializeAddressTable() {
-		initializeConversation();
-		if (userInfoList == null) {
-			userInfoList = new ArrayList<UserInfo>();
-		}
-
-		for (int i = 0; i < 10; i++) {
-			UserInfo userInfo = new UserInfo();
-			userInfo.setAddress("124 Downda Rd" + i);
-			userInfo.setCity("city" + i);
-			userInfo.setFirstName("First" + i);
-			userInfo.setLastName("Last" + i);
-			userInfo.setState("State" + i);
-			userInfo.setZip("Zip" + i);
-
-			userInfoList.add(userInfo);
-		}
-	}
-
-	public void initializeCreateModifyAddress() {
-		initializeConversation();
 	}
 
 	public void search(String firstName, String lastName) {
-		userInfo.setFirstName(firstName);
-		userInfo.setLastName(lastName);
+		initializeConversation();
+		if ((firstName != null && !"".equalsIgnoreCase(firstName))
+				|| (lastName != null && !"".equalsIgnoreCase(lastName))) {
+			userInfo.setFirstName(firstName);
+			userInfo.setLastName(lastName);
+			setSearch(true);
+		} else {
+			setSearch(false);
+		}
 	}
 
-	public void setCreateModifyAddress(UserInfo userInfo) {
+	public void initializeUserInfoTable() {
+		userInfoList = new ArrayList<UserInfo>();
+		if (!isSearch()) {
+			for (int i = 0; i < 10; i++) {
+				UserInfo userInfo = new UserInfo();
+				userInfo.setAddress("124 Downda Rd" + i);
+				userInfo.setCity("city" + i);
+				userInfo.setFirstName("First" + i);
+				userInfo.setLastName("Last" + i);
+				userInfo.setState("State" + i);
+				userInfo.setZip("Zip" + i);
+
+				userInfoList.add(userInfo);
+			}
+		} else {
+			UserInfo user = new UserInfo();
+			user.setFirstName(userInfo.getFirstName());
+			user.setLastName(userInfo.getLastName());
+
+			userInfoList.add(userInfo);
+			setSearch(false);
+		}
+
+	}
+
+	public void initializeCreateModifyAddress() {
+	}
+	public void creatingNewUserInfo(){
+		setCreateUserInfo(true);
+	}
+	public void createUserInfo(){
+		
+	}
+	
+	public void modifyingUserInfo(UserInfo userInfo) {
+		initializeConversation();
 		this.userInfo = userInfo;
-		endConversation();
-	}
-
-	public String getFirstName() {
-		return userInfo.getFirstName();
-	}
-
-	public String getLastName() {
-		return userInfo.getLastName();
-	}
-
-	public void setFirstName(String firstName) {
-		userInfo.setFirstName(firstName);
-	}
-
-	public void setLastName(String lastName) {
-		userInfo.setLastName(lastName);
-	}
-
-	public String getAddress() {
-		return userInfo.getAddress();
-	}
-
-	public String getState() {
-		return userInfo.getState();
-	}
-
-	public String getCity() {
-		return userInfo.getCity();
-	}
-
-	public String getZip() {
-		return userInfo.getZip();
 	}
 
 	/**
@@ -146,5 +135,34 @@ public class AddressProcessor implements Serializable {
 	 */
 	public void setUserInfoList(List<UserInfo> userInfoList) {
 		this.userInfoList = userInfoList;
+	}
+
+	/**
+	 * @return the isSearch
+	 */
+	public boolean isSearch() {
+		return isSearch;
+	}
+
+	/**
+	 * @param isSearch
+	 *            the isSearch to set
+	 */
+	public void setSearch(boolean isSearch) {
+		this.isSearch = isSearch;
+	}
+
+	/**
+	 * @return the isCreateUserInfo
+	 */
+	public boolean isCreateUserInfo() {
+		return isCreateUserInfo;
+	}
+
+	/**
+	 * @param isCreateUserInfo the isCreateUserInfo to set
+	 */
+	public void setCreateUserInfo(boolean isCreateUserInfo) {
+		this.isCreateUserInfo = isCreateUserInfo;
 	}
 }
