@@ -42,7 +42,9 @@ public class UserInfoModel implements Serializable {
 	}
 	
 	public List<UserInfo> queryListOfUsers(UserInfo user){
-		return new ArrayList<UserInfo>();
+		List<UserInfo> userList = new ArrayList<UserInfo>();
+		userList.add(user);
+		return userList;
 	}
 	
 	public List<UserInfo> queryFullListOfUser(){

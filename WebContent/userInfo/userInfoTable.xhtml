@@ -6,28 +6,31 @@
 
 <body>
 	<ui:composition>
-		<h:form>
-			<table border="1">
-				<tr>
-					<th>#{msg['userInfoTable.firstName']}</th>
-					<th>#{msg['userInfoTable.lastName']}</th>
-					<th>#{msg['userInfoTable.address']}</th>
-					<th>#{msg['userInfoTable.city']}</th>
-					<th>#{msg['userInfoTable.state']}</th>
-					<th>#{msg['userInfoTable.zip']}</th>
-				</tr>
-			<ui:repeat var="userInfo" value="#{userInfoTable.userInfoList}">
-				<tr>
-					<td><h:commandLink value="#{userInfo.firstName}" action="#{userInfoTable.modifyUserInfo(userInfo)}" /></td>
-					<td>#{userInfo.lastName}</td>
-					<td>#{userInfo.address}</td>
-					<td>#{userInfo.city}</td>
-					<td>#{userInfo.state}</td>
-					<td>#{userInfo.zip}</td>
-				</tr>
-			</ui:repeat>
-			</table>			
-		</h:form>
+		<ui:fragment rendered="#{userInfoTable.showUserInfoTable()}">
+			<h:form>
+				<table border="1">
+					<tr>
+						<th>#{msg['userInfoTable.firstName']}</th>
+						<th>#{msg['userInfoTable.lastName']}</th>
+						<th>#{msg['userInfoTable.address']}</th>
+						<th>#{msg['userInfoTable.city']}</th>
+						<th>#{msg['userInfoTable.state']}</th>
+						<th>#{msg['userInfoTable.zip']}</th>
+					</tr>
+					<ui:repeat var="userInfo" value="#{userInfoTable.userInfoList}">
+						<tr>
+							<td><h:commandLink value="#{userInfo.firstName}"
+									action="#{userInfoTable.navigateToCreateModifyUserInfo(userInfo)}" /></td>
+							<td>#{userInfo.lastName}</td>
+							<td>#{userInfo.address}</td>
+							<td>#{userInfo.city}</td>
+							<td>#{userInfo.state}</td>
+							<td>#{userInfo.zip}</td>
+						</tr>
+					</ui:repeat>
+				</table>
+			</h:form>
+		</ui:fragment>
 	</ui:composition>
 </body>
 </html>

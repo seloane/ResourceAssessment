@@ -3,7 +3,6 @@
  */
 package bean;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,28 +17,28 @@ import userInfo.UserInfo;
 
 /**
  * @author jtarver
- *
+ * 
  */
 @Named
 @ManagedBean
 @RequestScoped
 public class UserInfoTable {
-	
+
 	@Inject
 	UserInfoProcessor addressProcessor;
-	
+
 	private List<UserInfo> userInfoList = new ArrayList<UserInfo>();
-	
-	UserInfoTable(){
-		
+
+	UserInfoTable() {
+
 	}
-	
+
 	@PostConstruct
-	public void init(){
+	public void init() {
 		addressProcessor.initializeUserInfoTable();
 		userInfoList = addressProcessor.getUserInfoList();
 	}
-	
+
 	/**
 	 * @return the addressList
 	 */
@@ -48,15 +47,18 @@ public class UserInfoTable {
 	}
 
 	/**
-	 * @param userInfoList the addressList to set
+	 * @param userInfoList
+	 *            the addressList to set
 	 */
 	public void setAddressList(List<UserInfo> userInfoList) {
 		this.userInfoList = userInfoList;
 	}
-	
-	public String modifyUserInfo(UserInfo userInfo){
-		addressProcessor.modifyingUserInfo(userInfo);
-		return "createModifyUserInfo?faces-redirect=true";
+
+	public String navigateToCreateModifyUserInfo(UserInfo userInfo) {
+		return "createModifyUserInfo.xhtml?faces-redirect=true";
 	}
-	
+
+	public boolean showUserInfoTable() {
+		return (this.userInfoList.size() > 0);
+	}
 }

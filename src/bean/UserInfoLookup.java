@@ -28,11 +28,11 @@ public class UserInfoLookup {
 
 	public String search() {
 		addressProcessor.search(firstName, lastName);
-		return "home?faces-redirect=true";
+		return "home.xhtml?faces-redirect=true";
 	}
 	public String createUserInfo(){
 		addressProcessor.creatingNewUserInfo();
-		return "createModifyAddress?faces-redirect=true";
+		return "createModifyUserInfo.xhtml?faces-redirect=true";
 	}
 	/**
 	 * @return the firstName

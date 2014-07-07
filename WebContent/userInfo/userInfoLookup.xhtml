@@ -6,16 +6,19 @@
 <body>
 	<ui:composition>
 		<h:form>
-	#{msg['userInfoLookup.label']}
-	<br /> #{msg['firstName']}
-	<h:inputText value="#{userInfoLookup.firstName}" />
-	#{msg['lastName']}
-	<h:inputText value="#{userInfoLookup.lastName}" />
+			#{msg['userInfoLookup.label']}
+			<br /> 
+			#{msg['firstName']}
+			<h:inputText value="#{userInfoLookup.firstName}" />
+			#{msg['lastName']}
+			<h:inputText value="#{userInfoLookup.lastName}" />
 			<h:commandButton value="#{msg['search']}"
 				action="#{userInfoLookup.search()}" />
 			<br />
-			<h:link value="#{msg['userInfoLookup.newAddress.label']}"
-				outcome="#{userInfoLookup.createUserInfo()}" />
+			<h:outputLink id="createUserInfoLink"
+				value="#{userInfoLookup.createUserInfo()}">
+				<h:outputText value="#{msg['userInfoLookup.newAddress.label']}" />
+			</h:outputLink>
 		</h:form>
 	</ui:composition>
 </body>

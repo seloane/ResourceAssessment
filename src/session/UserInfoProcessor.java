@@ -81,17 +81,20 @@ public class UserInfoProcessor implements Serializable {
 	}
 
 	public void initializeUserInfoTable() {
-		if (userInfoList == null) {
-			userInfoList = new ArrayList<UserInfo>();
-		}
+		
 		if (isSearch()) {
+			//To be removed
+			if (userInfoList == null) {
+				userInfoList = new ArrayList<UserInfo>();
+			}
+			
 			this.userInfoList = userInfoModel.queryListOfUsers(userInfo);
-		} else {
+		} else if (this.userInfoList == null){
+			userInfoList = new ArrayList<UserInfo>();
 			this.userInfoList = userInfoModel.queryFullListOfUser();
 		}
 		setSearch(false);
-		endConversation();
-
+		// endConversation();
 	}
 
 	public void initializeCreateModifyAddress() {
@@ -105,9 +108,56 @@ public class UserInfoProcessor implements Serializable {
 
 	}
 
-	public void modifyingUserInfo(UserInfo userInfo) {
-		initializeConversation();
-		this.userInfo = userInfo;
+	public void modifyingUserInfo(UserInfo user) {
+		System.out.println("Jimmy: Inside modifyingUserInfo method");
+		if (user != null) {
+			if (validateUserInfo(user)) {
+				System.out.println("Jimmy: valid user");
+				this.userInfo = user;
+				if(isCreateUserInfo()){
+					System.out.println("Jimmy: creating user");
+					userInfoModel.createNewUser(userInfo);
+				}else{
+					System.out.println("Jimmy: modifying user");
+					userInfoModel.modifyUser(userInfo);
+				}
+				// to be removed
+				if(this.userInfoList==null){
+					this.userInfoList = new ArrayList<UserInfo>();
+				}
+				this.userInfoList.add(user);
+//				endConversation();
+			}else{
+				// Display error message to screen
+			}
+		}
+
+	}
+
+	private boolean validateUserInfo(UserInfo user) {
+System.out.println("Jimmy: Validating user");
+		if (user.getFirstName() == null
+				|| "".equalsIgnoreCase(user.getFirstName())) {
+			return false;
+		}
+		if (user.getLastName() == null
+				|| "".equalsIgnoreCase(user.getFirstName())) {
+			return false;
+		}
+		if (user.getAddress() == null || "".equalsIgnoreCase(user.getAddress())) {
+			return false;
+		}
+		if (user.getState() == null || "".equalsIgnoreCase(user.getState())) {
+			return false;
+		}
+		if (user.getCity() == null || "".equalsIgnoreCase(user.getCity())) {
+			return false;
+		}
+		if (user.getZip() == null || "".equalsIgnoreCase(user.getZip())) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

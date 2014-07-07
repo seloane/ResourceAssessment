@@ -49,7 +49,8 @@ public class CreateModifyUserInfo {
 		this.zip = userInfo.getZip();
 	}
 	
-	public void submit(){
+	public String submit(){
+		System.out.println("Jimmy: Inside submit method");
 		UserInfo userInfo = new UserInfo();
 		userInfo.setFirstName(firstName);
 		userInfo.setLastName(lastName);
@@ -59,6 +60,9 @@ public class CreateModifyUserInfo {
 		userInfo.setZip(zip);
 		
 		addressProcessor.modifyingUserInfo(userInfo);
+		
+		System.out.println("Jimmy: Done modifying. Time to change the page");
+		return "home.xhtml";
 	}
 
 	/**
