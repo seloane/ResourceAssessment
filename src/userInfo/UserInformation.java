@@ -1,68 +1,32 @@
 /**
  * 
  */
-package bean;
+package userInfo;
 
-import javax.annotation.ManagedBean;
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import session.UserInfoProcessor;
-import userInfo.UserInformation;
+import java.io.Serializable;
 
 /**
  * @author jtarver
  *
  */
-@Named
-@ManagedBean
-@RequestScoped
-public class CreateModifyUserInfo {
+public class UserInformation implements Serializable {
 
-	@Inject
-	private UserInfoProcessor addressProcessor;
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3644831469152087201L;
 	private String firstName;
 	private String lastName;
 	private String address;
 	private String city;
 	private String state;
-	private String zip;
+	private int zip;
 	
 	/**
 	 * 
 	 */
-	public CreateModifyUserInfo() {
-	}
-
-	@PostConstruct
-	public void init(){
-		UserInformation userInfo = addressProcessor.getUserInfo();
-		
-		this.firstName = userInfo.getFirstName();
-		this.lastName = userInfo.getLastName();
-		this.address = userInfo.getAddress();
-		this.state = userInfo.getState();
-		this.city = userInfo.getCity();
-		this.zip = userInfo.getZip();
-	}
-	
-	public String submit(){
-		System.out.println("Jimmy: Inside submit method");
-		UserInformation userInfo = new UserInformation();
-		userInfo.setFirstName(firstName);
-		userInfo.setLastName(lastName);
-		userInfo.setAddress(address);
-		userInfo.setState(state);
-		userInfo.setCity(city);
-		userInfo.setZip(zip);
-		
-		addressProcessor.modifyingUserInfo(userInfo);
-		
-		System.out.println("Jimmy: Done modifying. Time to change the page");
-		return "home.xhtml";
+	public UserInformation() {
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -138,14 +102,14 @@ public class CreateModifyUserInfo {
 	/**
 	 * @return the zip
 	 */
-	public String getZip() {
+	public int getZip() {
 		return zip;
 	}
 
 	/**
 	 * @param zip the zip to set
 	 */
-	public void setZip(String zip) {
+	public void setZip(int zip) {
 		this.zip = zip;
 	}
 

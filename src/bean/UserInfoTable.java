@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import session.UserInfoProcessor;
-import userInfo.UserInfo;
+import userInfo.UserInformation;
 
 /**
  * @author jtarver
@@ -27,7 +27,7 @@ public class UserInfoTable {
 	@Inject
 	UserInfoProcessor addressProcessor;
 
-	private List<UserInfo> userInfoList = new ArrayList<UserInfo>();
+	private List<UserInformation> userInfoList = new ArrayList<UserInformation>();
 
 	UserInfoTable() {
 
@@ -42,7 +42,7 @@ public class UserInfoTable {
 	/**
 	 * @return the addressList
 	 */
-	public List<UserInfo> getUserInfoList() {
+	public List<UserInformation> getUserInfoList() {
 		return userInfoList;
 	}
 
@@ -50,11 +50,11 @@ public class UserInfoTable {
 	 * @param userInfoList
 	 *            the addressList to set
 	 */
-	public void setAddressList(List<UserInfo> userInfoList) {
+	public void setAddressList(List<UserInformation> userInfoList) {
 		this.userInfoList = userInfoList;
 	}
 
-	public String modifyUserInfo(UserInfo userInfo) {
+	public String modifyUserInfo(UserInformation userInfo) {
 		return addressProcessor.modifyUserInfo(userInfo);
 	}
 
