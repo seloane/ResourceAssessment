@@ -30,7 +30,7 @@ public class UserInfoLookup {
 		return addressProcessor.search(firstName, lastName);		
 	}
 	public String addUserInfo(){
-		return addressProcessor.addUserInfo();
+		return addressProcessor.navigateToaddUserInfoPage();
 	}
 	/**
 	 * @return the firstName

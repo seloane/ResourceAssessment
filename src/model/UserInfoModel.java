@@ -1,16 +1,12 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import userInfo.UserInformation;
@@ -26,16 +22,17 @@ public class UserInfoModel implements Serializable {
 	@PersistenceContext
 	private EntityManager entityManager;
 
-	// private static final String PERSISTENCE_UNIT_NAME = "ResourceAssessment";
-	// private static EntityManagerFactory factory =
-	// Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-
 	public UserInfoModel() {
 	}
 
-	public boolean createNewUser(UserInformation user) {
+	public boolean addUser(UserInformation userInformation) {
 
-		if (user != null) {
+		if (userInformation != null) {
+			UserInfo user = populateUserInfo(userInformation);
+
+			entityManager.persist(user);
+			entityManager.flush();
+			
 			return true;
 		}
 		return false;
@@ -65,7 +62,7 @@ public class UserInfoModel implements Serializable {
 		return results;
 	}
 
-	public TypedQuery<UserInfo> populateQueryString(UserInformation user) {
+	private TypedQuery<UserInfo> populateQueryString(UserInformation user) {
 		StringBuilder query = new StringBuilder()
 				.append("select u from UserInfo u");
 
@@ -74,8 +71,8 @@ public class UserInfoModel implements Serializable {
 		boolean hasLastName = (user.getLastName() != null && !""
 				.equalsIgnoreCase(user.getLastName()));
 
-		String firstNameStringAppend = "u.firstName = :firstName";// '"+user.getFirstName()+"'";
-		String lastNameStringAppend = "u.lastName = :lastName";//'" + user.getLastName()+ "'";
+		String firstNameStringAppend = "u.firstName = :firstName";
+		String lastNameStringAppend = "u.lastName = :lastName";
 
 		if (hasFirstName && hasLastName) {
 			query.append(" where " + firstNameStringAppend + " and "
@@ -96,15 +93,20 @@ public class UserInfoModel implements Serializable {
 		}
 		return typedQuery;
 	}
-
-	public List<UserInformation> queryListOfUsers(UserInformation user) {
-		List<UserInformation> userList = new ArrayList<UserInformation>();
-		userList.add(user);
-		return userList;
+	
+	private UserInfo populateUserInfo(UserInformation user){
+		UserInfo userInfo = new UserInfo();
+		
+		if(user!=null){
+			userInfo.setFirstName(user.getFirstName());
+			userInfo.setLastName(user.getLastName());
+			userInfo.setAddress(user.getAddress());
+			userInfo.setCity(user.getCity());
+			userInfo.setState(user.getState());
+			userInfo.setZip(user.getZip());
+		}
+		
+		return userInfo;
 	}
-
-	public List<UserInformation> queryFullListOfUser() {
-		return new ArrayList<UserInformation>();
-	}
-
+	
 }

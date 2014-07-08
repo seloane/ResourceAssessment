@@ -5,6 +5,7 @@ package session;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -36,7 +37,7 @@ public class UserInfoProcessor implements Serializable {
 	@Inject
 	private UserInfoModel userInfoModel;
 	boolean isSearch;
-	boolean isCreateUserInfo;
+	boolean isAddUserInformation;
 
 	/**
 	 * 
@@ -119,13 +120,12 @@ public class UserInfoProcessor implements Serializable {
 		// endConversation();
 	}
 
-	public void initializeCreateModifyAddress() {
+	public void initializeAddModifyAddress() {
+		isAddUserInformation = !(userInfo.getAddress() != null);
 	}
 
-	public String addUserInfo() {
-		setCreateUserInfo(true);
-
-		return "createModifyUserInfo.xhtml?faces-redirect=true";
+	public String navigateToaddUserInfoPage() {
+		return "addModifyUserInfo.xhtml?faces-redirect=true";
 	}
 
 	public void createUserInfo() {
@@ -133,22 +133,38 @@ public class UserInfoProcessor implements Serializable {
 	}
 
 	public String modifyUserInfo(UserInformation user) {
-		return "createModifyUserInfo.xhtml?faces-redirect=true";
+		return "addModifyUserInfo.xhtml?faces-redirect=true";
+	}
+	
+	public void addUserInfo(UserInformation user){
+
+		if (user != null) {
+			if (validateUserInfo(user)) {
+				this.userInfo = user;
+					if(userInfoModel.addUser(userInfo)){
+						System.out.println("Jimmy: successful add");
+					}else{
+						System.out.println("Jimmy: unsuccessful add");
+					}
+				
+			} else {
+				System.out.println("Invalid User Informaiton");
+			}
+		}else{
+			System.out.println("Jimmy: User is null");
+		}
 	}
 
 	public void modifyingUserInfo(UserInformation user) {
-		System.out.println("Jimmy: Inside modifyingUserInfo method");
+		
 		if (user != null) {
+			System.out.println("Jimmy: User isn't null");
 			if (validateUserInfo(user)) {
-				System.out.println("Jimmy: valid user");
+				System.out.println("Jimmy: Valid user");
 				this.userInfo = user;
-				if (isCreateUserInfo()) {
-					System.out.println("Jimmy: creating user");
-					userInfoModel.createNewUser(userInfo);
-				} else {
-					System.out.println("Jimmy: modifying user");
+				
 					userInfoModel.modifyUser(userInfo);
-				}
+				
 				// to be removed
 				if (this.userInfoList == null) {
 					this.userInfoList = new ArrayList<UserInformation>();
@@ -156,34 +172,43 @@ public class UserInfoProcessor implements Serializable {
 				this.userInfoList.add(user);
 				// endConversation();
 			} else {
-				// Display error message to screen
+				System.out.println("Invalid User Informaiton");
+//				FacesContext.getCurrentInstance().addMessage(arg0, arg1);
 			}
+		}else{
+			System.out.println("Jimmy: User is null");
 		}
 
 	}
 
 	private boolean validateUserInfo(UserInformation user) {
-		System.out.println("Jimmy: Validating user");
 		if (user.getFirstName() == null
 				|| "".equalsIgnoreCase(user.getFirstName())) {
+			System.out.println("Invalid First Name: "+user.getFirstName());
 			return false;
 		}
 		if (user.getLastName() == null
-				|| "".equalsIgnoreCase(user.getFirstName())) {
+				|| "".equalsIgnoreCase(user.getLastName())) {
+			System.out.println("Invalid Last Name: "+user.getLastName());
 			return false;
 		}
 		if (user.getAddress() == null || "".equalsIgnoreCase(user.getAddress())) {
+			System.out.println("Invalid Address: "+user.getAddress());
 			return false;
 		}
 		if (user.getState() == null || "".equalsIgnoreCase(user.getState())) {
+			System.out.println("Invalid State: "+user.getState());
 			return false;
 		}
 		if (user.getCity() == null || "".equalsIgnoreCase(user.getCity())) {
+			System.out.println("Invalid City: "+user.getCity());
 			return false;
 		}
-		if (user.getZip() > 9999 && user.getZip() < 100000) {
+		if (user.getZip() < 9999 && user.getZip() > 100000) {
+			System.out.println("Invalid Zip: "+user.getZip());
 			return false;
 		}
+	
 
 		return true;
 	}
@@ -219,17 +244,17 @@ public class UserInfoProcessor implements Serializable {
 	}
 
 	/**
-	 * @return the isCreateUserInfo
+	 * @return the isAddUserInformation
 	 */
-	public boolean isCreateUserInfo() {
-		return isCreateUserInfo;
+	public boolean isAddUserInformation() {
+		return isAddUserInformation;
 	}
 
 	/**
-	 * @param isCreateUserInfo
-	 *            the isCreateUserInfo to set
+	 * @param isAddUserInformation the isAddUserInformation to set
 	 */
-	public void setCreateUserInfo(boolean isCreateUserInfo) {
-		this.isCreateUserInfo = isCreateUserInfo;
+	public void setAddUserInformation(boolean isAddUserInformation) {
+		this.isAddUserInformation = isAddUserInformation;
 	}
+
 }

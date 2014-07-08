@@ -26,7 +26,6 @@ public class UserInformation implements Serializable {
 	 * 
 	 */
 	public UserInformation() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

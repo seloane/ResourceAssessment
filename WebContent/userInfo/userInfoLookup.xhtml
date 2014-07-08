@@ -15,10 +15,8 @@
 			<h:commandButton value="#{msg['search']}"
 				action="#{userInfoLookup.search()}" />
 			<br />
-			<h:outputLink id="addUserInfoLink"
-				value="#{userInfoLookup.addUserInfo()}">
-				<h:outputText value="#{msg['userInfoLookup.newAddress.label']}" />
-			</h:outputLink>
+			<h:commandLink id="addUserInfoLink"
+				action="#{userInfoLookup.addUserInfo()}" value="#{msg['userInfoLookup.newAddress.label']}" />
 		</h:form>
 	</ui:composition>
 </body>
