@@ -6,6 +6,9 @@
 
 <body>
 	<ui:composition>
+		<ui:fragment rendered="#{!userInfoTable.showUserInfoTable()}">
+			No Results
+		</ui:fragment>
 		<ui:fragment rendered="#{userInfoTable.showUserInfoTable()}">
 			<h:form>
 				<table border="1">

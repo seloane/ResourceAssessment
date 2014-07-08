@@ -107,17 +107,13 @@ public class UserInfoProcessor implements Serializable {
 	}
 
 	public void initializeUserInfoTable() {
-
-		if (isSearch()) {
-			// To be removed
-			if (userInfoList == null) {
-				userInfoList = new ArrayList<UserInformation>();
-			}
-
-			this.userInfoList = userInfoModel.queryListOfUsers(userInfo);
-		} else if (this.userInfoList == null) {
+		if (this.userInfoList == null) {
 			userInfoList = new ArrayList<UserInformation>();
-			this.userInfoList = userInfoModel.queryFullListOfUser();
+		}
+		if (!isSearch()) {
+			List<UserInfo> fullResultList = userInfoModel
+					.retrieveUserInfo(new UserInformation());
+			this.userInfoList = populateUserInformationList(fullResultList);
 		}
 		setSearch(false);
 		// endConversation();
@@ -185,7 +181,7 @@ public class UserInfoProcessor implements Serializable {
 		if (user.getCity() == null || "".equalsIgnoreCase(user.getCity())) {
 			return false;
 		}
-		if (user.getZip() >9999 && user.getZip()<100000) {
+		if (user.getZip() > 9999 && user.getZip() < 100000) {
 			return false;
 		}
 
