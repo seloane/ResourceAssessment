@@ -54,8 +54,8 @@ public class UserInfoTable {
 		this.userInfoList = userInfoList;
 	}
 
-	public String navigateToCreateModifyUserInfo(UserInfo userInfo) {
-		return "createModifyUserInfo.xhtml?faces-redirect=true";
+	public String modifyUserInfo(UserInfo userInfo) {
+		return addressProcessor.modifyUserInfo(userInfo);
 	}
 
 	public boolean showUserInfoTable() {

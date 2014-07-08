@@ -20,7 +20,7 @@
 					<ui:repeat var="userInfo" value="#{userInfoTable.userInfoList}">
 						<tr>
 							<td><h:commandLink value="#{userInfo.firstName}"
-									action="#{userInfoTable.navigateToCreateModifyUserInfo(userInfo)}" /></td>
+									action="#{userInfoTable.modifyUserInfo(userInfo)}" /></td>
 							<td>#{userInfo.lastName}</td>
 							<td>#{userInfo.address}</td>
 							<td>#{userInfo.city}</td>

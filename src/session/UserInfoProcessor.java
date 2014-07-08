@@ -66,7 +66,7 @@ public class UserInfoProcessor implements Serializable {
 
 	}
 
-	public void search(String firstName, String lastName) {
+	public String search(String firstName, String lastName) {
 		/** Start conversation to keep state of first and/or last name. */
 		initializeConversation();
 
@@ -78,6 +78,7 @@ public class UserInfoProcessor implements Serializable {
 
 			setSearch(true);
 		}
+		return "home.xhtml?faces-redirect=true";
 	}
 
 	public void initializeUserInfoTable() {
@@ -100,14 +101,20 @@ public class UserInfoProcessor implements Serializable {
 	public void initializeCreateModifyAddress() {
 	}
 
-	public void creatingNewUserInfo() {
+	public String addUserInfo() {
 		setCreateUserInfo(true);
+
+		return "createModifyUserInfo.xhtml?faces-redirect=true";
 	}
 
 	public void createUserInfo() {
 
 	}
 
+	public String modifyUserInfo(UserInfo user){
+		return "createModifyUserInfo.xhtml?faces-redirect=true";
+	}
+	
 	public void modifyingUserInfo(UserInfo user) {
 		System.out.println("Jimmy: Inside modifyingUserInfo method");
 		if (user != null) {
